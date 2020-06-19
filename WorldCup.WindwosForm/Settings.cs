@@ -156,7 +156,7 @@ namespace WorldCup.WindwosForm
 		{
 			if (this.settings == null || this.settings.Language == null || this.settings.Cup == null)
 			{
-				MessageBox.Show("Odjebi");
+				MessageBox.Show("Molimo popunite postavke", "Ne može van", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return false;
 			}
 			return true;
