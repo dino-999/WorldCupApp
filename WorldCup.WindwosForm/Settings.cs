@@ -33,7 +33,7 @@ namespace WorldCup.WindwosForm
 			this.settingsRepo = RepositoryFactory.GetSettingsRepository();
 			if (settingsRepo == null)
 			{
-				MessageBox.Show("Problemi...", "Sranje", MessageBoxButtons.OK, MessageBoxIcon.Error);				
+				MessageBox.Show("Pogreška", "Pogreška", MessageBoxButtons.OK, MessageBoxIcon.Error);				
 			}
 
 			this.PrepareLanguages();
@@ -91,18 +91,19 @@ namespace WorldCup.WindwosForm
 			};
 		}
 
+		// učitaj settings ako postoji 
 		private void PopulateSettingsFromDatabase()
 		{
-			var getSettingsResponse = this.settingsRepo.GetSettingsTask();
+			var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
 
 			if(!getSettingsResponse.Succeded)
 			{
-				this.settings = new SettingsModel();
+				this.settings = new SettingsModel(); //ako nema ništa spremljeno stvori prazan settings model na razini ove klase/forme
 				return;
 			}
-			this.settings = getSettingsResponse.Settings;
-			var selectedLanguage = this.languageDataSource.Where(x => x.Name == this.settings.Language.Name).FirstOrDefault();
-
+			this.settings = getSettingsResponse.Settings; 
+			var selectedLanguage = this.languageDataSource.Where(x => x.Value == this.settings.Language.Value).FirstOrDefault();
+				// ako nešto ima spremljeno podesi tako jezik i cup
 			if(selectedLanguage != null)
 			{
 				cbLanguage.SelectedItem = selectedLanguage;

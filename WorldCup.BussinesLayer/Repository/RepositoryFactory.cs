@@ -11,5 +11,16 @@ namespace WorldCup.BussinesLayer.Repository
 		{
 			return new FileSettingsRepository();
 		}
+
+		public static IPlayerRepository GetPlayerRepository()
+        {
+			return new FilePlayerRepository();
+        }
+		public static ITeamsRepository GetTeamsRepository()
+        {
+			return new FileTeamsRepository();
+		}
+
+
 	}
 }
