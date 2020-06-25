@@ -25,6 +25,9 @@ namespace WorldCup.WindwosForm
 		public Settings()
 		{
 			InitializeComponent();
+			
+
+
 		}
 
 		private void Settings_Load(object sender, EventArgs e)
@@ -143,6 +146,7 @@ namespace WorldCup.WindwosForm
 			Thread.CurrentThread.CurrentCulture = cultureInfo;
 
 			MessageBox.Show("Postavke uspješno spremljene", "Spremljeno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			this.Close();
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)

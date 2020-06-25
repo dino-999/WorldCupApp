@@ -28,7 +28,11 @@ namespace WorldCup.BussinesLayer.Repository
 		}
 
 		public GetSettingsTaskResponse GetSettingsTask()
-		{			
+		{
+			if (!File.Exists(PathsConstants.SettingsFilePath))
+			{
+				File.Create(PathsConstants.SettingsFilePath).Dispose();
+			}
 			using (StreamReader sr = new StreamReader(PathsConstants.SettingsFilePath))
 			{
 				SettingsModel settings = JsonConvert.DeserializeObject<SettingsModel>(sr.ReadToEnd());				

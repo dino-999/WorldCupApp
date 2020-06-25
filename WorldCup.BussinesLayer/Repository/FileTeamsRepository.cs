@@ -13,7 +13,7 @@ namespace WorldCup.BussinesLayer.Repository
 {
     public interface ITeamsRepository
     {
-        GetTeamsTaskResponse GetTeamsTask();
+        GetTeamsTaskResponse GetTeamsTask(GetTeamsTaskRequest request);
         SaveFavouriteTeamTaskResponse SaveFavouriteTeamsTask(SaveFavouriteTeamTaskRequest request);
 
         GetFavouriteTeamTaskResponse GetFavouriteTeamTask(GetFavouriteTeamTaskRequest request);
@@ -42,9 +42,46 @@ namespace WorldCup.BussinesLayer.Repository
 
         }
 
-        public GetTeamsTaskResponse GetTeamsTask()
+        public GetTeamsTaskResponse GetTeamsTask(GetTeamsTaskRequest request)
         {
-            throw new NotImplementedException();
+            if (request.Cup.Name == "Muško prvenstvo")
+            {
+                return new GetTeamsTaskResponse()
+                {
+                    Teams = new List<TeamVM>()
+                {
+                    new TeamVM()
+                    {
+                        Country="Hrvatksa",
+                        FifaCode="CRO"
+                    },
+                    new TeamVM
+                    {
+                        Country="Francuska",
+                        FifaCode="FRA"
+                    }
+                }
+                };
+            }
+            else
+            {
+                return new GetTeamsTaskResponse()
+                {
+                    Teams = new List<TeamVM>()
+                {
+                    new TeamVM()
+                    {
+                        Country="Španjolska",
+                        FifaCode="SPA"
+                    },
+                    new TeamVM
+                    {
+                        Country="Engleska",
+                        FifaCode="ENG"
+                    }
+                }
+                };
+            }
         }
 
         public SaveFavouriteTeamTaskResponse SaveFavouriteTeamsTask(SaveFavouriteTeamTaskRequest request)
@@ -99,6 +136,10 @@ namespace WorldCup.BussinesLayer.Repository
 
         private FavouriteTeamSettingsModel GetFavouriteTeamSettings()
         {
+            if (!File.Exists(PathsConstants.FavouriteTeamSettingsFilePath))
+            {
+                File.Create(PathsConstants.FavouriteTeamSettingsFilePath).Dispose();
+            }
             using (StreamReader sr = new StreamReader(PathsConstants.FavouriteTeamSettingsFilePath))
             {
 
@@ -118,6 +159,11 @@ namespace WorldCup.BussinesLayer.Repository
 
             }
         }
+    }
+
+    public class GetTeamsTaskRequest
+    {
+        public CupVM Cup { get; set; }
     }
 
     public class GetFavouriteTeamTaskRequest
