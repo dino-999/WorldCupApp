@@ -18,6 +18,11 @@ namespace WorldCup.BussinesLayer.Repository
 			return new FileTeamsRepository();
 		}
 
+		public static IMatchRepository GetMatchRepository()
+		{
+			return new MatchRepository();
+		}
+
 
 	}
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,14 +22,20 @@ namespace WorldCup.WindwosForm
         private ISettingsRepository settingsRepo;
         private SettingsModel settings;
         private ITeamsRepository teamsRepo;
+        private IMatchRepository matchRepo;
 
+        public int PrintedPages { get; set; }
+        public int PagesToPrint { get; set; }
 
         public Main()
         {
             InitializeComponent();
             this.settingsRepo = RepositoryFactory.GetSettingsRepository();
             this.teamsRepo = RepositoryFactory.GetTeamsRepository();
-        }
+            this.matchRepo = RepositoryFactory.GetMatchRepository();
+            PagesToPrint = 1;
+          
+    }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -50,7 +58,7 @@ namespace WorldCup.WindwosForm
             //ako je naloadaj timove kao dropdown i oznaci omiljeni
 
             PopulateTeamsDropdown();
-
+            RefreshDataOnPlayersTab();
         }
 
         private void PopulateTeamsDropdown()
@@ -117,6 +125,93 @@ namespace WorldCup.WindwosForm
                 MessageBox.Show("Nije uspješno spremljeno!");
             }
 
+        }
+
+        #region Print
+
+        private void toolStripMenuPageSettings_Click(object sender, EventArgs e)
+        {
+            pageSetupDialog1.ShowDialog();
+        }
+
+        private void toolStripMenuChoosePrinter_Click(object sender, EventArgs e)
+        {
+            printDialog1.ShowDialog();
+        }
+
+        private void toolStripMenuPrintPreview_Click(object sender, EventArgs e)
+        {
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void toolStripMenuPrint_Click(object sender, EventArgs e)
+        {
+            PrintedPages = 0;
+            printDialog1.ShowDialog();
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            PrintTable(tabPage3);
+
+ 
+            if (++PrintedPages < PagesToPrint)
+                e.HasMorePages = true;
+        }
+
+        Bitmap memorying;
+        private void PrintTable(TabPage tabPage3)
+        {
+            PrinterSettings prtSettings = new PrinterSettings();
+            TabPage tablePage3 = tabPage3;
+            GetPageArea(tablePage3);
+            
+
+        }
+
+        private void GetPageArea(TabPage tablePage3)
+        {
+            memorying = new Bitmap(tablePage3.Width, tablePage3.Height);
+            tablePage3.DrawToBitmap(memorying,new Rectangle(0, 0, tablePage3.Width, tablePage3.Height));
+
+        }
+        #endregion
+
+        private void ctrlTable1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.ctrlTable1.SelectedTab == this.tabPage1)
+            {
+                RefreshDataOnPlayersTab();
+            }
+            else if (this.ctrlTable1.SelectedTab == this.tabPage2)
+            {
+                RefreshRagListOne();
+            }
+            else if (this.ctrlTable1.SelectedTab == this.tabPage3)
+            {
+                RefreshRagListTwo();
+            }
+        }
+
+        private void RefreshRagListTwo()
+        {
+            
+        }
+
+        private void RefreshRagListOne()
+        {
+            
+        }
+
+        private void RefreshDataOnPlayersTab()
+        {
+            var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
+
+            var players = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
+            {
+                Cup = this.settings.Cup,
+                FifaCode = teamFifaCode
+            });
         }
     }
 }

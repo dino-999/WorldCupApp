@@ -44,7 +44,7 @@ namespace WorldCup.BussinesLayer.Repository
 
         public GetTeamsTaskResponse GetTeamsTask(GetTeamsTaskRequest request)
         {
-            if (request.Cup.Name == "Muško prvenstvo")
+            if (request.Cup.Name == CupVM.MaleCup)
             {
                 return new GetTeamsTaskResponse()
                 {

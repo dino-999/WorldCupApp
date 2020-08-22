@@ -5,8 +5,8 @@ using WorldCup.BussinesLayer.Models;
 
 namespace WorldCup.BussinesLayer.ViewModels
 {
-    public class TeamVM : Team
+    public class PlayerVM : Player
     {
-        //Nothing do far...
+        public bool IsFavourite { get; set; }
     }
 }

@@ -1,66 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using WorldCup.BussinesLayer.Models;
 using WorldCup.BussinesLayer.Repository;
 using WorldCup.BussinesLayer.ViewModels;
 
-namespace WorldCup.WindwosForm
+namespace WorldCup.WindowsPresentationForm
 {
-	public partial class Settings : Form
+    /// <summary>
+    /// Interaction logic for Window1.xaml
+    /// </summary>
+    public partial class Window1 : Window
 	{
 		private List<LanguageVM> languageDataSource;
 		private List<CupVM> cupsDataSource;
 		private ISettingsRepository settingsRepo;
 		private SettingsModel settings;
 
-		public Settings()
-		{
-			InitializeComponent();
-			
+		public Window1()
+        {
+            InitializeComponent();
+        }
 
-
-		}
-
-		private void Settings_Load(object sender, EventArgs e)
+		private void Window1_Load(object sender, EventArgs e)
 		{
 
 			this.settingsRepo = RepositoryFactory.GetSettingsRepository();
 			if (settingsRepo == null)
 			{
-				MessageBox.Show("Pogreška", "Pogreška", MessageBoxButtons.OK, MessageBoxIcon.Error);				
+                System.Windows.MessageBox.Show("Pogreška", "Pogreška", MessageBoxButton.OK);
 			}
 
-			this.PrepareLanguages();
-			this.PopulateLanguagesDataSource();
+			//this.PrepareLanguages();
+			//this.PopulateLanguagesDataSource();
 
-			this.PrepareCups();
-			this.PopulateCupsDataSource();
+			//this.PrepareCups();
+			//this.PopulateCupsDataSource();
 
-			this.PopulateSettingsFromDatabase();
+			//this.PopulateSettingsFromDatabase();
 		}
 
-		private void PopulateCupsDataSource()
-		{
-			cbGenderSelection.DataSource = this.cupsDataSource;
-			cbGenderSelection.ValueMember = "Name";
-			cbGenderSelection.DisplayMember = "Name";
-		}
+		//private void PopulateCupsDataSource()
+		//{
+		//	cbGenderSelection.DataSource = this.cupsDataSource;
+		//	cbGenderSelection.ValueMember = "Name";
+		//	cbGenderSelection.DisplayMember = "Name";
+		//}
 
-		private void PopulateLanguagesDataSource()
-		{
-			cbLanguage.DataSource = this.languageDataSource;
-			cbLanguage.DisplayMember = "Name";
-			cbLanguage.ValueMember = "Value";
-		}
+		//private void PopulateLanguagesDataSource()
+		//{
+		//	cbLanguage.DataSource = this.languageDataSource;
+		//	cbLanguage.DisplayMember = "Name";
+		//	cbLanguage.ValueMember = "Value";
+		//}
 
 		private void PrepareLanguages()
 		{
@@ -99,15 +104,15 @@ namespace WorldCup.WindwosForm
 		{
 			var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
 
-			if(!getSettingsResponse.Succeded)
+			if (!getSettingsResponse.Succeded)
 			{
 				this.settings = new SettingsModel(); //ako nema ništa spremljeno stvori prazan settings model na razini ove klase/forme
 				return;
 			}
-			this.settings = getSettingsResponse.Settings; 
+			this.settings = getSettingsResponse.Settings;
 			var selectedLanguage = this.languageDataSource.Where(x => x.Value == this.settings.Language.Value).FirstOrDefault();
-				// ako nešto ima spremljeno podesi tako jezik i cup
-			if(selectedLanguage != null)
+			// ako nešto ima spremljeno podesi tako jezik i cup
+			if (selectedLanguage != null)
 			{
 				cbLanguage.SelectedItem = selectedLanguage;
 			}
@@ -126,9 +131,9 @@ namespace WorldCup.WindwosForm
 			var choosenLanguage = cbLanguage.SelectedItem as LanguageVM;
 			var choosenCup = cbGenderSelection.SelectedItem as CupVM;
 
-			if(choosenLanguage == null || choosenCup == null)
+			if (choosenLanguage == null || choosenCup == null)
 			{
-				MessageBox.Show("Popunite sve podatke","Validacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.MessageBox.Show("Popunite sve podatke", "Validacija", MessageBoxButton.OK);
 				return;
 			}
 
@@ -145,7 +150,7 @@ namespace WorldCup.WindwosForm
 			Thread.CurrentThread.CurrentUICulture = cultureInfo;
 			Thread.CurrentThread.CurrentCulture = cultureInfo;
 
-			MessageBox.Show("Postavke uspješno spremljene", "Spremljeno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.Windows.MessageBox.Show("Postavke uspješno spremljene", "Spremljeno", MessageBoxButton.OK);
 			this.Close();
 		}
 
@@ -161,7 +166,7 @@ namespace WorldCup.WindwosForm
 		{
 			if (this.settings == null || this.settings.Language == null || this.settings.Cup == null)
 			{
-				MessageBox.Show("Molimo popunite postavke", "Ne može van", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.MessageBox.Show("Molimo popunite postavke", "Ne može van", MessageBoxButton.OK);
 				return false;
 			}
 			return true;
@@ -171,9 +176,7 @@ namespace WorldCup.WindwosForm
 			if (!this.CanClose())
 			{
 				e.Cancel = true;
-			}			
+			}
 		}
 	}
-
-	
 }
