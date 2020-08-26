@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WorldCup.WindowsPresentationForm
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Information.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Information : Window
     {
-        public MainWindow()
+        public Information()
         {
             InitializeComponent();
-        }
-
-       
-        private void btnInfo_Click(object sender, RoutedEventArgs e)
-        {
-            Information info = new Information();
-            this.Visibility = Visibility.Visible;
-            info.Show();
         }
     }
 }
