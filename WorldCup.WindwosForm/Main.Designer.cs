@@ -37,7 +37,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnSwitchPlayers = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnPrintList = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -51,6 +50,7 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.pnlLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.ctrlTable1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -66,6 +66,7 @@
             this.cbFavouriteTeam.Name = "cbFavouriteTeam";
             this.cbFavouriteTeam.Size = new System.Drawing.Size(183, 21);
             this.cbFavouriteTeam.TabIndex = 0;
+            this.cbFavouriteTeam.SelectedIndexChanged += new System.EventHandler(this.cbFavouriteTeam_SelectedIndexChanged);
             // 
             // lblFavouriteTeam
             // 
@@ -115,9 +116,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.pnlLeft);
             this.tabPage1.Controls.Add(this.btnSwitchPlayers);
             this.tabPage1.Controls.Add(this.panel2);
-            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -144,15 +145,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(376, 450);
             this.panel2.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel1.Location = new System.Drawing.Point(15, 27);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(376, 450);
-            this.panel1.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -259,6 +251,13 @@
             // 
             this.pageSetupDialog1.Document = this.printDocument1;
             // 
+            // pnlLeft
+            // 
+            this.pnlLeft.Location = new System.Drawing.Point(16, 27);
+            this.pnlLeft.Name = "pnlLeft";
+            this.pnlLeft.Size = new System.Drawing.Size(345, 450);
+            this.pnlLeft.TabIndex = 2;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,7 +297,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnSwitchPlayers;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnPrintList;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu;
@@ -310,5 +308,6 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+        private System.Windows.Forms.FlowLayoutPanel pnlLeft;
     }
 }

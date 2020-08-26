@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
+using RestEase;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using WorldCup.BussinesLayer.Api;
 using WorldCup.BussinesLayer.Models;
 using WorldCup.BussinesLayer.ViewModels;
 
@@ -44,44 +47,23 @@ namespace WorldCup.BussinesLayer.Repository
 
         public GetTeamsTaskResponse GetTeamsTask(GetTeamsTaskRequest request)
         {
+            var result = new GetTeamsTaskResponse();
+
             if (request.Cup.Name == CupVM.MaleCup)
             {
-                return new GetTeamsTaskResponse()
-                {
-                    Teams = new List<TeamVM>()
-                {
-                    new TeamVM()
-                    {
-                        Country="Hrvatksa",
-                        FifaCode="CRO"
-                    },
-                    new TeamVM
-                    {
-                        Country="Francuska",
-                        FifaCode="FRA"
-                    }
-                }
-                };
+                var api = RestClient.For<ISoccerApi>("https://world-cup-json-2018.herokuapp.com/");
+                result.Teams = api.GetTeams().GetAwaiter().GetResult()
+                    .Select(x => new TeamVM(x.Id, x.Country, x.AlternateName, x.FifaCode, x.GroupId, x.GroupLetter))
+                    .ToList();
             }
-            else
+            else if (request.Cup.Name == CupVM.FemaleCup)
             {
-                return new GetTeamsTaskResponse()
-                {
-                    Teams = new List<TeamVM>()
-                {
-                    new TeamVM()
-                    {
-                        Country="Španjolska",
-                        FifaCode="SPA"
-                    },
-                    new TeamVM
-                    {
-                        Country="Engleska",
-                        FifaCode="ENG"
-                    }
-                }
-                };
+                var api = RestClient.For<ISoccerApi>("https://worldcup.sfg.io/");
+                result.Teams = api.GetTeams().GetAwaiter().GetResult()
+                    .Select(x => new TeamVM(x.Id, x.Country, x.AlternateName, x.FifaCode, x.GroupId, x.GroupLetter))
+                    .ToList();
             }
+            return result;
         }
 
         public SaveFavouriteTeamTaskResponse SaveFavouriteTeamsTask(SaveFavouriteTeamTaskRequest request)

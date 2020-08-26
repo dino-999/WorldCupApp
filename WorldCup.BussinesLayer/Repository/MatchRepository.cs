@@ -67,17 +67,17 @@ namespace WorldCup.BussinesLayer.Repository
                 .Where(x => x.HomeTeam.Code == request.FifaCode || x.AwayTeam.Code == request.FifaCode)
                 .FirstOrDefault();
 
-            if(match == null)
+            if (match == null)
             {
                 return response;
             }
 
-            if(match.AwayTeam.Code == request.FifaCode)
+            if (match.AwayTeam.Code == request.FifaCode)
             {
                 response.Players.AddRange(match.AwayTeamStatistics.StartingEleven);
                 response.Players.AddRange(match.AwayTeamStatistics.Substitutes);
             }
-            else if(match.HomeTeam.Code == request.FifaCode)
+            else if (match.HomeTeam.Code == request.FifaCode)
             {
                 response.Players.AddRange(match.HomeTeamStatistics.StartingEleven);
                 response.Players.AddRange(match.HomeTeamStatistics.Substitutes);

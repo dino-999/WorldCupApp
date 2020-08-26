@@ -207,11 +207,22 @@ namespace WorldCup.WindwosForm
         {
             var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-            var players = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
+            var getAllPlayersForTeamResponse = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
             {
                 Cup = this.settings.Cup,
                 FifaCode = teamFifaCode
             });
+
+            pnlLeft.Controls.Clear();
+            foreach (var player in getAllPlayersForTeamResponse.Players)
+            {
+                pnlLeft.Controls.Add(new PlayerUC(new PlayerVM(player, true)));
+            }
+        }
+
+        private void cbFavouriteTeam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ctrlTable1_SelectedIndexChanged(ctrlTable1, e);
         }
     }
 }

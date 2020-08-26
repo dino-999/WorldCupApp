@@ -9,7 +9,10 @@ namespace WorldCup.BussinesLayer.Api
 {
     public interface ISoccerApi
     {
-        [Get("teams")]
+        [Get("matches")]
         Task<List<MatchDetail>> GetMatchDetails();
+
+        [Get("teams")]
+        Task<List<Team>> GetTeams();
     }
 }

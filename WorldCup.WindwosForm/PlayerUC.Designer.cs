@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerUC));
             this.lblName = new System.Windows.Forms.Label();
             this.lblShirtNumber = new System.Windows.Forms.Label();
             this.lblPosition = new System.Windows.Forms.Label();
@@ -77,9 +78,13 @@
             // 
             // pbFavourite
             // 
+            this.pbFavourite.BackColor = System.Drawing.SystemColors.Control;
+            this.pbFavourite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbFavourite.Image = ((System.Drawing.Image)(resources.GetObject("pbFavourite.Image")));
             this.pbFavourite.Location = new System.Drawing.Point(267, 3);
             this.pbFavourite.Name = "pbFavourite";
             this.pbFavourite.Size = new System.Drawing.Size(26, 22);
+            this.pbFavourite.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbFavourite.TabIndex = 4;
             this.pbFavourite.TabStop = false;
             // 
@@ -96,6 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.Controls.Add(this.lblCaptain);
             this.Controls.Add(this.pbFavourite);
             this.Controls.Add(this.pbPlayerImage);
