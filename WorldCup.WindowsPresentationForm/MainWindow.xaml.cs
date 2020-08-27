@@ -49,10 +49,11 @@ namespace WorldCup.WindowsPresentationForm
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-        //    Settings s = new Settings();
-        //    s.ShowDialog(this);
-        //    PopulateSettingsFromDatabase();
-        //    PopulateTeamsDropdown();
+           Settings settings = new Settings();
+            this.Visibility = Visibility.Visible;
+           
+           PopulateSettingsFromDatabase();
+           PopulateTeamsDropdown();
         }
 
         private void PopulateTeamsDropdown()

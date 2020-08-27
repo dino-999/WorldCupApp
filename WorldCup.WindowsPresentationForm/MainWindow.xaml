@@ -23,6 +23,8 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
@@ -36,10 +38,10 @@
         <Button x:Name="btnInfoEnemy" Content="Info" Grid.Column="6" Grid.Row="1" Margin="10 0" MaxWidth="80" MinWidth="50" Click="btnInfoEnemy_Click" />
         
         <Button x:Name="btnInfoFavourite" Content="Info" Grid.Column="3" Grid.Row="1" Margin="10 0" MaxWidth="80" MinWidth="50" Click="btnInfoFavourite_Click"/>
-        <Button x:Name="btnSettings" Content="Postavke" Grid.Column="3" Grid.Row="4" Margin="10 0" MaxWidth="80" MinWidth="50" Click="btnSettings_Click"/>
+        <Button x:Name="btnSettings" Content="Postavke" Grid.Column="3" Grid.Row="3" Margin="10 0" MaxWidth="80" MinWidth="50" Click="btnSettings_Click"/>
         
         
-
+    
         
     </Grid>
 </Window>

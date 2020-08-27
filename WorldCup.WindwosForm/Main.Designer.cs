@@ -35,8 +35,10 @@
             this.btnMakeFavourite = new System.Windows.Forms.Button();
             this.ctrlTable1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.flpFavourites = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllPlayers = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnSwitchPlayers = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnPrintList = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -50,9 +52,6 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.flpFavourites = new System.Windows.Forms.FlowLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.ctrlTable1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -123,7 +122,6 @@
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.flpFavourites);
             this.tabPage1.Controls.Add(this.flpAllPlayers);
-            this.tabPage1.Controls.Add(this.btnSwitchPlayers);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -132,22 +130,37 @@
             this.tabPage1.Text = "Igrači";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(645, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Favoriti";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(22, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Svi";
+            // 
+            // flpFavourites
+            // 
+            this.flpFavourites.Location = new System.Drawing.Point(648, 54);
+            this.flpFavourites.Name = "flpFavourites";
+            this.flpFavourites.Size = new System.Drawing.Size(384, 423);
+            this.flpFavourites.TabIndex = 3;
+            // 
             // flpAllPlayers
             // 
             this.flpAllPlayers.Location = new System.Drawing.Point(16, 54);
             this.flpAllPlayers.Name = "flpAllPlayers";
             this.flpAllPlayers.Size = new System.Drawing.Size(345, 423);
             this.flpAllPlayers.TabIndex = 2;
-            // 
-            // btnSwitchPlayers
-            // 
-            this.btnSwitchPlayers.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnSwitchPlayers.Location = new System.Drawing.Point(457, 204);
-            this.btnSwitchPlayers.Name = "btnSwitchPlayers";
-            this.btnSwitchPlayers.Size = new System.Drawing.Size(121, 92);
-            this.btnSwitchPlayers.TabIndex = 0;
-            this.btnSwitchPlayers.Text = "Prebaci igrače";
-            this.btnSwitchPlayers.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -254,31 +267,6 @@
             // 
             this.pageSetupDialog1.Document = this.printDocument1;
             // 
-            // flpFavourites
-            // 
-            this.flpFavourites.Location = new System.Drawing.Point(648, 54);
-            this.flpFavourites.Name = "flpFavourites";
-            this.flpFavourites.Size = new System.Drawing.Size(384, 423);
-            this.flpFavourites.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(22, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Svi";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(699, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "favoriti";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -317,7 +305,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Button btnSwitchPlayers;
         private System.Windows.Forms.Button btnPrintList;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu;
