@@ -22,6 +22,11 @@ namespace WorldCup.WindwosForm
             this.player = player;
         }
 
+        public Player GetPlayer()
+        {
+            return this.player;
+        }
+
         private void PlayerUC_Load(object sender, EventArgs e)
         {
             lblName.Text = this.player.Name;

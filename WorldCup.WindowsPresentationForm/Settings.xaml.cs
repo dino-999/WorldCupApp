@@ -24,159 +24,161 @@ namespace WorldCup.WindowsPresentationForm
     /// Interaction logic for Window1.xaml
     /// </summary>
     public partial class Window1 : Window
-	{
-		private List<LanguageVM> languageDataSource;
-		private List<CupVM> cupsDataSource;
-		private ISettingsRepository settingsRepo;
-		private SettingsModel settings;
+    {
+        private List<LanguageVM> languageDataSource;
+        private List<CupVM> cupsDataSource;
+        private ISettingsRepository settingsRepo;
+        private SettingsModel settings;
 
-		public Window1()
+        public Window1()
         {
             InitializeComponent();
         }
 
-		private void Window1_Load(object sender, EventArgs e)
-		{
+        private void Window1_Load(object sender, EventArgs e)
+        {
 
-			this.settingsRepo = RepositoryFactory.GetSettingsRepository();
-			if (settingsRepo == null)
-			{
+            this.settingsRepo = RepositoryFactory.GetSettingsRepository();
+            if (settingsRepo == null)
+            {
                 System.Windows.MessageBox.Show("Pogreška", "Pogreška", MessageBoxButton.OK);
-			}
+            }
 
-			//this.PrepareLanguages();
-			//this.PopulateLanguagesDataSource();
+            this.PrepareLanguages();
+            this.PopulateLanguagesDataSource();
 
-			//this.PrepareCups();
-			//this.PopulateCupsDataSource();
+            this.PrepareCups();
+            this.PopulateCupsDataSource();
 
-			//this.PopulateSettingsFromDatabase();
-		}
+            this.PopulateSettingsFromDatabase();
+        }
 
-		//private void PopulateCupsDataSource()
-		//{
-		//	cbGenderSelection.DataSource = this.cupsDataSource;
-		//	cbGenderSelection.ValueMember = "Name";
-		//	cbGenderSelection.DisplayMember = "Name";
-		//}
+        private void PopulateCupsDataSource()
+        {
+        	cbGenderSelection.DataContext = this.cupsDataSource;
+        	cbGenderSelection.SelectedValue = "Name";
+        	cbGenderSelection.DisplayMemberPath = "Name";
+        }
 
-		//private void PopulateLanguagesDataSource()
-		//{
-		//	cbLanguage.DataSource = this.languageDataSource;
-		//	cbLanguage.DisplayMember = "Name";
-		//	cbLanguage.ValueMember = "Value";
-		//}
+        private void PopulateLanguagesDataSource()
+        {
+       	cbLanguage.DataContext = this.languageDataSource;
+        	cbLanguage.DisplayMemberPath = "Name";
+        	cbLanguage.SelectedValue = "Value";
+        }
 
-		private void PrepareLanguages()
-		{
-			this.languageDataSource = new List<LanguageVM>()
-			{
-				new LanguageVM()
-				{
-					Name = Properties.Resources.language_croatian,
-					Value = "hr"
-				},
-				new LanguageVM()
-				{
-					Name = Properties.Resources.language_english,
-					Value = "en"
-				}
-			};
-		}
+        private void PrepareLanguages()
+        {
+            this.languageDataSource = new List<LanguageVM>()
+            {
+                new LanguageVM()
+                {
+                    Name = Properties.Resources.language_croatian,
+                    Value = "hr"
+                },
+                new LanguageVM()
+                {
+                    Name = Properties.Resources.language_english,
+                    Value = "en"
+                }
+            };
+        }
 
-		private void PrepareCups()
-		{
-			this.cupsDataSource = new List<CupVM>()
-			{
-				new CupVM()
-				{
-					Name = Properties.Resources.cup_male
-				},
-				new CupVM()
-				{
-					Name = Properties.Resources.cup_female
-				}
-			};
-		}
+        private void PrepareCups()
+        {
+            this.cupsDataSource = new List<CupVM>()
+            {
+                new CupVM()
+                {
+                    Name = Properties.Resources.cup_male
+                },
+                new CupVM()
+                {
+                    Name = Properties.Resources.cup_female
+                }
+            };
+        }
 
-		// učitaj settings ako postoji 
-		private void PopulateSettingsFromDatabase()
-		{
-			var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
+        // učitaj settings ako postoji 
+        private void PopulateSettingsFromDatabase()
+        {
+            var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
 
-			if (!getSettingsResponse.Succeded)
-			{
-				this.settings = new SettingsModel(); //ako nema ništa spremljeno stvori prazan settings model na razini ove klase/forme
-				return;
-			}
-			this.settings = getSettingsResponse.Settings;
-			var selectedLanguage = this.languageDataSource.Where(x => x.Value == this.settings.Language.Value).FirstOrDefault();
-			// ako nešto ima spremljeno podesi tako jezik i cup
-			if (selectedLanguage != null)
-			{
-				cbLanguage.SelectedItem = selectedLanguage;
-			}
+            if (!getSettingsResponse.Succeded)
+            {
+                this.settings = new SettingsModel(); //ako nema ništa spremljeno stvori prazan settings model na razini ove klase/forme
+                return;
+            }
+            this.settings = getSettingsResponse.Settings;
+            var selectedLanguage = this.languageDataSource.Where(x => x.Value == this.settings.Language.Value).FirstOrDefault();
+            // ako nešto ima spremljeno podesi tako jezik i cup
+            if (selectedLanguage != null)
+            {
+                cbLanguage.SelectedItem = selectedLanguage;
+            }
 
-			var selectedCup = this.cupsDataSource.Where(x => x.Name == this.settings.Cup.Name).FirstOrDefault();
+            var selectedCup = this.cupsDataSource.Where(x => x.Name == this.settings.Cup.Name).FirstOrDefault();
 
-			if (selectedCup != null)
-			{
-				cbGenderSelection.SelectedItem = selectedCup;
-			}
+            if (selectedCup != null)
+            {
+                cbGenderSelection.SelectedItem = selectedCup;
+            }
 
-		}
+        }
 
-		private void btnSave_Click(object sender, EventArgs e)
-		{
-			var choosenLanguage = cbLanguage.SelectedItem as LanguageVM;
-			var choosenCup = cbGenderSelection.SelectedItem as CupVM;
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var choosenLanguage = cbLanguage.SelectedItem as LanguageVM;
+            var choosenCup = cbGenderSelection.SelectedItem as CupVM;
 
-			if (choosenLanguage == null || choosenCup == null)
-			{
+            if (choosenLanguage == null || choosenCup == null)
+            {
                 System.Windows.MessageBox.Show("Popunite sve podatke", "Validacija", MessageBoxButton.OK);
-				return;
-			}
+                return;
+            }
 
-			this.settings.Cup = choosenCup;
-			this.settings.Language = choosenLanguage;
+            this.settings.Cup = choosenCup;
+            this.settings.Language = choosenLanguage;
 
-			this.settingsRepo.SaveSettingsTask(new SaveSettingsTaskRequest()
-			{
-				Settings = this.settings
-			});
+            this.settingsRepo.SaveSettingsTask(new SaveSettingsTaskRequest()
+            {
+                Settings = this.settings
+            });
 
-			//Promjeni jezik threada...
-			var cultureInfo = new CultureInfo(choosenLanguage.Value);
-			Thread.CurrentThread.CurrentUICulture = cultureInfo;
-			Thread.CurrentThread.CurrentCulture = cultureInfo;
+            //Promjeni jezik threada...
+            var cultureInfo = new CultureInfo(choosenLanguage.Value);
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
 
             System.Windows.MessageBox.Show("Postavke uspješno spremljene", "Spremljeno", MessageBoxButton.OK);
-			this.Close();
-		}
+            this.Close();
+        }
 
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			if (this.CanClose())
-			{
-				this.Close();
-			}
-		}
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            if (this.CanClose())
+            {
+                this.Close();
+            }
+        }
 
-		private bool CanClose()
-		{
-			if (this.settings == null || this.settings.Language == null || this.settings.Cup == null)
-			{
+        private bool CanClose()
+        {
+            if (this.settings == null || this.settings.Language == null || this.settings.Cup == null)
+            {
                 System.Windows.MessageBox.Show("Molimo popunite postavke", "Ne može van", MessageBoxButton.OK);
-				return false;
-			}
-			return true;
-		}
-		private void Settings_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (!this.CanClose())
-			{
-				e.Cancel = true;
-			}
-		}
-	}
+                return false;
+            }
+            return true;
+        }
+      
+
+        private void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.CanClose())
+            {
+                e.Cancel = true;
+            }
+        }
+    }
 }

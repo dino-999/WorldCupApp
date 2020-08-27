@@ -23,6 +23,7 @@ namespace WorldCup.WindwosForm
         private SettingsModel settings;
         private ITeamsRepository teamsRepo;
         private IMatchRepository matchRepo;
+        private IPLayerRepository playerRepo;
 
         public int PrintedPages { get; set; }
         public int PagesToPrint { get; set; }
@@ -33,9 +34,10 @@ namespace WorldCup.WindwosForm
             this.settingsRepo = RepositoryFactory.GetSettingsRepository();
             this.teamsRepo = RepositoryFactory.GetTeamsRepository();
             this.matchRepo = RepositoryFactory.GetMatchRepository();
+            this.playerRepo = RepositoryFactory.GetPLayerRepository();
             PagesToPrint = 1;
-          
-    }
+
+        }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -58,7 +60,6 @@ namespace WorldCup.WindwosForm
             //ako je naloadaj timove kao dropdown i oznaci omiljeni
 
             PopulateTeamsDropdown();
-            RefreshDataOnPlayersTab();
         }
 
         private void PopulateTeamsDropdown()
@@ -70,20 +71,21 @@ namespace WorldCup.WindwosForm
 
             var allTeams = teamsRepo.GetTeamsTask(getTeamTaskRequest)?.Teams;
 
-            cbFavouriteTeam.DataSource = allTeams;
-            cbFavouriteTeam.ValueMember = "FifaCode";
-            cbFavouriteTeam.DisplayMember = "Country";
 
             var favouriteTeam = this.teamsRepo.GetFavouriteTeamTask(new GetFavouriteTeamTaskRequest()
             {
                 Cup = this.settings.Cup
             });
 
-            if(favouriteTeam.Team != null)
+            if (favouriteTeam.Team != null)
             {
                 var favouriteTeamFromDataSource = allTeams.Where(x => x.FifaCode == favouriteTeam.Team.FifaCode).FirstOrDefault();
                 cbFavouriteTeam.SelectedItem = favouriteTeamFromDataSource;
             }
+
+            cbFavouriteTeam.DisplayMember = "Country";
+            cbFavouriteTeam.ValueMember = "FifaCode";
+            cbFavouriteTeam.DataSource = allTeams;
         }
 
         private void PopulateSettingsFromDatabase()
@@ -154,7 +156,7 @@ namespace WorldCup.WindwosForm
         {
             PrintTable(tabPage3);
 
- 
+
             if (++PrintedPages < PagesToPrint)
                 e.HasMorePages = true;
         }
@@ -165,21 +167,21 @@ namespace WorldCup.WindwosForm
             PrinterSettings prtSettings = new PrinterSettings();
             TabPage tablePage3 = tabPage3;
             GetPageArea(tablePage3);
-            
+
 
         }
 
         private void GetPageArea(TabPage tablePage3)
         {
             memorying = new Bitmap(tablePage3.Width, tablePage3.Height);
-            tablePage3.DrawToBitmap(memorying,new Rectangle(0, 0, tablePage3.Width, tablePage3.Height));
+            tablePage3.DrawToBitmap(memorying, new Rectangle(0, 0, tablePage3.Width, tablePage3.Height));
 
         }
         #endregion
 
         private void ctrlTable1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(this.ctrlTable1.SelectedTab == this.tabPage1)
+            if (this.ctrlTable1.SelectedTab == this.tabPage1)
             {
                 RefreshDataOnPlayersTab();
             }
@@ -195,13 +197,23 @@ namespace WorldCup.WindwosForm
 
         private void RefreshRagListTwo()
         {
-            
+
         }
 
         private void RefreshRagListOne()
         {
-            
+            var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
+
+            var getAllPlayersForTeamResponse = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
+            {
+                Cup = this.settings.Cup,
+                FifaCode = teamFifaCode
+            });
+
+
         }
+
+        #region Player tab
 
         private void RefreshDataOnPlayersTab()
         {
@@ -213,16 +225,98 @@ namespace WorldCup.WindwosForm
                 FifaCode = teamFifaCode
             });
 
-            pnlLeft.Controls.Clear();
+            flpAllPlayers.Controls.Clear();
+            flpFavourites.Controls.Clear();
+
+            //Dohvati omiljene igrače za timecode i cup
+
+            var getFavouritePlayers = this.playerRepo.GetFavouritePlayersForTeamAndCupTask(new GetFavouritePlayersForTeamAndCupTaskRequest()
+            {
+                Cup = this.settings.Cup,
+                TeamFifaCode = teamFifaCode
+            });
+
             foreach (var player in getAllPlayersForTeamResponse.Players)
             {
-                pnlLeft.Controls.Add(new PlayerUC(new PlayerVM(player, true)));
+                var playerIsFavourite = false;
+                //sadži li ta nova lista ovog playera koji je u foreachu
+                foreach (var p in getFavouritePlayers.Players)
+                {
+                    if (p.Name == player.Name && p.ShirtNumber == player.ShirtNumber)
+                    {
+                        playerIsFavourite = true;
+                        break;
+                    }
+                }
+                if (playerIsFavourite)
+                {
+                    var RemoveFavouriteContextMenuItem = new ContextMenuStrip();
+                    RemoveFavouriteContextMenuItem.Items.Add("Makni iz favorita");
+                    RemoveFavouriteContextMenuItem.Items[0].Click += RemoveFavourite;
+                    RemoveFavouriteContextMenuItem.Items[0].Tag = player;
+
+                    flpFavourites.Controls.Add(new PlayerUC(new PlayerVM(player, playerIsFavourite))
+                    {
+                        ContextMenuStrip = RemoveFavouriteContextMenuItem
+                    });
+                    
+                }
+                else
+                {
+                    var AddFavouriteContextMenuItem = new ContextMenuStrip();
+                    AddFavouriteContextMenuItem.Items.Add("Dodaj u favorite");
+                    AddFavouriteContextMenuItem.Items[0].Click += AddFavourite;
+                    AddFavouriteContextMenuItem.Items[0].Tag = player;
+
+                    flpAllPlayers.Controls.Add(new PlayerUC(new PlayerVM(player, playerIsFavourite))
+                    {
+                        ContextMenuStrip = AddFavouriteContextMenuItem
+                    });
+                }
             }
         }
 
+        private void RemoveFavourite(object sender, EventArgs e)
+        {
+            var toolStrimMenuItem = (ToolStripMenuItem)sender;
+            var player = (Player)toolStrimMenuItem.Tag;
+
+            var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
+            this.playerRepo.RemoveFavouritePlayerForTeamAndCupTask(new RemoveFavouritePlayerForTeamAndCupTaskRequest()
+            {
+                Cup = this.settings.Cup,
+                TeamFifaCode = teamFifaCode,
+                Player = player
+            });
+
+            this.RefreshDataOnPlayersTab();
+        }
+
+        private void AddFavourite(object sender, EventArgs e)
+        {
+            var toolStrimMenuItem = (ToolStripMenuItem)sender;
+            var player = (Player)toolStrimMenuItem.Tag;
+            
+            var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
+            this.playerRepo.AddFavouritePlayerForTeamAndCupTask(new AddFavouritePlayerForTeamAndCupTaskRequest()
+            {
+                Cup = this.settings.Cup,
+                TeamFifaCode = teamFifaCode,
+                Player = player
+            });
+
+            this.RefreshDataOnPlayersTab();
+        }
+
+        #endregion
         private void cbFavouriteTeam_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.ctrlTable1_SelectedIndexChanged(ctrlTable1, e);
+        }
+
+        private void cbFavouriteTeam_SelectedValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

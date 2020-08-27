@@ -8,5 +8,8 @@ namespace WorldCup.BussinesLayer
 	{
 		public static string SettingsFilePath { get; } = "..\\..\\..\\Db\\settings_db.json";
 		public static string FavouriteTeamSettingsFilePath { get; } = "..\\..\\..\\Db\\favouriteTeamSettings_db.json";
+		public static string FavouritePlayerSettingsFilePath { get; } = "..\\..\\..\\Db\\favouritePlayerSetting_db.json";
+
+
 	}
 }

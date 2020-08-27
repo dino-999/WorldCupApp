@@ -128,7 +128,7 @@ namespace WorldCup.BussinesLayer.Repository
 
                 var json = sr.ReadToEnd();  // Pročitaj string iz file-a
 
-                if (string.IsNullOrEmpty(json))
+                if (string.IsNullOrEmpty(json)) 
                 {
                     return null;
                 }

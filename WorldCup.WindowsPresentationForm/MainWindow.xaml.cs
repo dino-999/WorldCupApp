@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorldCup.BussinesLayer.Models;
+using WorldCup.BussinesLayer.Repository;
+using WorldCup.WindowsPresentationForm.Properties;
 
 namespace WorldCup.WindowsPresentationForm
 {
@@ -20,17 +23,73 @@ namespace WorldCup.WindowsPresentationForm
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ISettingsRepository settingsRepo;
+        private SettingsModel settings;
+        private ITeamsRepository teamsRepo;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-       
-        private void btnInfo_Click(object sender, RoutedEventArgs e)
+
+
+        private void btnInfoEnemy_Click(object sender, RoutedEventArgs e)
         {
             Information info = new Information();
             this.Visibility = Visibility.Visible;
             info.Show();
+        }
+
+        private void btnInfoFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            Information info = new Information();
+            this.Visibility = Visibility.Visible;
+            info.Show();
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+        //    Settings s = new Settings();
+        //    s.ShowDialog(this);
+        //    PopulateSettingsFromDatabase();
+        //    PopulateTeamsDropdown();
+        }
+
+        private void PopulateTeamsDropdown()
+        {
+            var getTeamTaskRequest = new GetTeamsTaskRequest()
+            {
+                Cup = settings.Cup
+            };
+
+            var allTeams = teamsRepo.GetTeamsTask(getTeamTaskRequest)?.Teams;
+
+            //cbFavouriteTeam.DataSource = allTeams;
+            //cbFavouriteTeam.ValueMember = "FifaCode";
+            //cbFavouriteTeam.DisplayMember = "Country";
+
+            var favouriteTeam = this.teamsRepo.GetFavouriteTeamTask(new GetFavouriteTeamTaskRequest()
+            {
+                Cup = this.settings.Cup
+            });
+
+            if (favouriteTeam.Team != null)
+            {
+                var favouriteTeamFromDataSource = allTeams.Where(x => x.FifaCode == favouriteTeam.Team.FifaCode).FirstOrDefault();
+                cbFavouriteTeam.SelectedItem = favouriteTeamFromDataSource;
+            }
+        }
+
+        private void PopulateSettingsFromDatabase()
+        {
+            var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
+
+            if (!getSettingsResponse.Succeded)
+            {
+                this.settings = new SettingsModel(); //ako nema ništa spremljeno stvori prazan settings model na razini ove klase/forme
+                return;
+            }
+            this.settings = getSettingsResponse.Settings;
         }
     }
 }

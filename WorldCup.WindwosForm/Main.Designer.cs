@@ -35,8 +35,8 @@
             this.btnMakeFavourite = new System.Windows.Forms.Button();
             this.ctrlTable1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.flpAllPlayers = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSwitchPlayers = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnPrintList = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -50,7 +50,9 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.pnlLeft = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpFavourites = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.ctrlTable1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -67,6 +69,7 @@
             this.cbFavouriteTeam.Size = new System.Drawing.Size(183, 21);
             this.cbFavouriteTeam.TabIndex = 0;
             this.cbFavouriteTeam.SelectedIndexChanged += new System.EventHandler(this.cbFavouriteTeam_SelectedIndexChanged);
+            this.cbFavouriteTeam.SelectedValueChanged += new System.EventHandler(this.cbFavouriteTeam_SelectedValueChanged);
             // 
             // lblFavouriteTeam
             // 
@@ -116,9 +119,11 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.pnlLeft);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.flpFavourites);
+            this.tabPage1.Controls.Add(this.flpAllPlayers);
             this.tabPage1.Controls.Add(this.btnSwitchPlayers);
-            this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -126,6 +131,13 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Igrači";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // flpAllPlayers
+            // 
+            this.flpAllPlayers.Location = new System.Drawing.Point(16, 54);
+            this.flpAllPlayers.Name = "flpAllPlayers";
+            this.flpAllPlayers.Size = new System.Drawing.Size(345, 423);
+            this.flpAllPlayers.TabIndex = 2;
             // 
             // btnSwitchPlayers
             // 
@@ -136,15 +148,6 @@
             this.btnSwitchPlayers.TabIndex = 0;
             this.btnSwitchPlayers.Text = "Prebaci igrače";
             this.btnSwitchPlayers.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Location = new System.Drawing.Point(656, 27);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(376, 450);
-            this.panel2.TabIndex = 1;
             // 
             // tabPage2
             // 
@@ -251,12 +254,30 @@
             // 
             this.pageSetupDialog1.Document = this.printDocument1;
             // 
-            // pnlLeft
+            // flpFavourites
             // 
-            this.pnlLeft.Location = new System.Drawing.Point(16, 27);
-            this.pnlLeft.Name = "pnlLeft";
-            this.pnlLeft.Size = new System.Drawing.Size(345, 450);
-            this.pnlLeft.TabIndex = 2;
+            this.flpFavourites.Location = new System.Drawing.Point(648, 54);
+            this.flpFavourites.Name = "flpFavourites";
+            this.flpFavourites.Size = new System.Drawing.Size(384, 423);
+            this.flpFavourites.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(84, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(22, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Svi";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(699, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "favoriti";
             // 
             // Main
             // 
@@ -275,6 +296,7 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.ctrlTable1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
@@ -296,7 +318,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnSwitchPlayers;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnPrintList;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenu;
@@ -308,6 +329,9 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
-        private System.Windows.Forms.FlowLayoutPanel pnlLeft;
+        private System.Windows.Forms.FlowLayoutPanel flpAllPlayers;
+        private System.Windows.Forms.FlowLayoutPanel flpFavourites;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

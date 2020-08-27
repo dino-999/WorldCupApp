@@ -23,6 +23,11 @@ namespace WorldCup.BussinesLayer.Repository
 			return new MatchRepository();
 		}
 
+		public static IPLayerRepository GetPLayerRepository()
+		{
+			return new FilePlayerRepository();
+		}
+
 
 	}
 }
