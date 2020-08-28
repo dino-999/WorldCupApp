@@ -8,8 +8,9 @@ namespace WorldCup.BussinesLayer.ViewModels
     public class PlayerVM : Player
     {
         public bool IsFavourite { get; set; }
+		public string ImagePath { get; set; }
 
-        public PlayerVM(Player player)
+		public PlayerVM(Player player)
         {
             this.Name = player.Name;
             this.Captain = player.Captain;
@@ -20,6 +21,11 @@ namespace WorldCup.BussinesLayer.ViewModels
         public PlayerVM(Player player, bool isFavourite) : this(player)
         {
             this.IsFavourite = isFavourite;
+        }
+
+        public PlayerVM(Player player, bool isFavourite, string imagePath) : this(player, isFavourite)
+        {
+            this.ImagePath = imagePath;
         }
     }
 }

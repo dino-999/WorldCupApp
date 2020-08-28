@@ -10,6 +10,8 @@ namespace WorldCup.BussinesLayer
 		public static string FavouriteTeamSettingsFilePath { get; } = "..\\..\\..\\Db\\favouriteTeamSettings_db.json";
 		public static string FavouritePlayerSettingsFilePath { get; } = "..\\..\\..\\Db\\favouritePlayerSetting_db.json";
 
+		public static string PlayerImagesDirectory { get; } = "..\\..\\..\\Db\\playerImages";
+
 
 	}
 }

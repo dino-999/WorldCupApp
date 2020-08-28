@@ -29,6 +29,7 @@ namespace WorldCup.WindwosForm
 
         private void PlayerUC_Load(object sender, EventArgs e)
         {
+            pbPlayerImage.Image = Image.FromFile(this.player.ImagePath);
             lblName.Text = this.player.Name;
             lblPosition.Text = this.player.Position;
             lblShirtNumber.Text = this.player.ShirtNumber.ToString();

@@ -41,7 +41,7 @@ namespace WorldCup.BussinesLayer.Models
         public string AwayTeamCountry { get; set; }
 
         [JsonProperty("datetime")]
-        public DateTime Datetime { get; set; }
+        public DateTime? Datetime { get; set; }
 
         [JsonProperty("winner")]
         public string Winner { get; set; }
@@ -68,10 +68,10 @@ namespace WorldCup.BussinesLayer.Models
         public TeamStatistics AwayTeamStatistics { get; set; }
 
         [JsonProperty("last_event_update_at")]
-        public DateTime LastEventUpdateAt { get; set; }
+        public DateTime? LastEventUpdateAt { get; set; }
 
         [JsonProperty("last_score_update_at")]
-        public DateTime LastScoreUpdateAt { get; set; }
+        public DateTime? LastScoreUpdateAt { get; set; }
     }
 
     public class Player
