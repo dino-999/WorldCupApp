@@ -6,23 +6,34 @@
         xmlns:local="clr-namespace:WorldCup.WindowsPresentationForm"
         mc:Ignorable="d"
         Title="Information" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="20" />
+			<ColumnDefinition Width="auto" />
+			<ColumnDefinition Width="auto" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="20" />
+		</Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
-    </Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="20" />
+		</Grid.RowDefinitions>
+
+		<DataGrid Grid.Column="1" AutoGenerateColumns="False" Name="DataGridTest" CanUserAddRows="True" Grid.Row="2" ItemsSource="{Binding TestBinding}" >
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Naziv" IsReadOnly="True" Binding="{Binding Path=Test1}" Width="90"></DataGridTextColumn>
+				<DataGridTextColumn Header="FIFA kod" IsReadOnly="True"  Binding="{Binding Path=Test2}" Width="90"></DataGridTextColumn>
+				<DataGridTextColumn Header="broj odigranih utakmica/pobjeda/poraza" IsReadOnly="True"  Binding="{Binding Path=test2}" Width="90"></DataGridTextColumn>
+				<DataGridTextColumn Header="primljeni/ostvareni golovi" IsReadOnly="True"  Binding="{Binding Path=Test2}" Width="90"></DataGridTextColumn>
+				
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button x:Name="btnAddDataBase" Content="Dodaj bazu" Grid.Column="2" Grid.Row="3" Click="btnAddDataBase_Click" />
+	</Grid>
 </Window>

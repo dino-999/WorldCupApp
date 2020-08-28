@@ -14,14 +14,21 @@ using System.Windows.Shapes;
 
 namespace WorldCup.WindowsPresentationForm
 {
-    /// <summary>
-    /// Interaction logic for Information.xaml
-    /// </summary>
-    public partial class Information : Window
-    {
-        public Information()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Interaction logic for Information.xaml
+	/// </summary>
+	public partial class Information : Window
+	{
+		public Information()
+		{
+			InitializeComponent();
+		}
+
+		private void btnAddDataBase_Click(object sender, RoutedEventArgs e)
+		{
+			//           var data = new Test { Test1 = "Test1", Test2 = "Test2" };
+
+			//      DataGridTest.Items.Add(data);
+		}
+	}
 }

@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WorldCup.BussinesLayer;
 using WorldCup.BussinesLayer.Models;
 using WorldCup.BussinesLayer.Repository;
 using WorldCup.BussinesLayer.ViewModels;
@@ -131,52 +132,46 @@ namespace WorldCup.WindwosForm
 
 		#region Print
 
-		private void toolStripMenuPageSettings_Click(object sender, EventArgs e)
-		{
-			pageSetupDialog1.ShowDialog();
-		}
 
-		private void toolStripMenuChoosePrinter_Click(object sender, EventArgs e)
-		{
-			printDialog1.ShowDialog();
-		}
 
-		private void toolStripMenuPrintPreview_Click(object sender, EventArgs e)
+		private void btnPrint_Click(object sender, EventArgs e)
 		{
+			int height = dgvShowPlayerInfo.Height;
+
+			printPreviewDialog1.PrintPreviewControl.Zoom = 1;
 			printPreviewDialog1.ShowDialog();
-		}
+			printPreviewDialog1.Height = height;
+			printDocument1.Print();
 
-		private void toolStripMenuPrint_Click(object sender, EventArgs e)
+		}
+		private void btnPrintRangList2_Click(object sender, EventArgs e)
 		{
-			PrintedPages = 0;
-			printDialog1.ShowDialog();
-		}
+			int height = dgvShowMatchInfo.Height;
 
-		private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+			printPreviewDialog2.PrintPreviewControl.Zoom = 1;
+			printPreviewDialog2.ShowDialog();
+			printPreviewDialog2.Height = height;
+			printDocument2.Print();
+
+		}
+		private void printDocument2_PrintPage(object sender, PrintPageEventArgs e)
 		{
-			PrintTable(tabPage3);
 
-
-			if (++PrintedPages < PagesToPrint)
-				e.HasMorePages = true;
+			Bitmap bm = new Bitmap(this.dgvShowMatchInfo.Width, this.dgvShowMatchInfo.Height);
+			dgvShowMatchInfo.DrawToBitmap(bm, new Rectangle(0, 0, this.dgvShowMatchInfo.Width, this.dgvShowMatchInfo.Height));
+			e.Graphics.DrawImage(bm, 0, 0);
 		}
-
-		Bitmap memorying;
-		private void PrintTable(TabPage tabPage3)
+		private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
 		{
-			PrinterSettings prtSettings = new PrinterSettings();
-			TabPage tablePage3 = tabPage3;
-			GetPageArea(tablePage3);
+
+			Bitmap bm = new Bitmap(this.dgvShowPlayerInfo.Width, this.dgvShowPlayerInfo.Height);
+			dgvShowPlayerInfo.DrawToBitmap(bm, new Rectangle(0, 0, this.dgvShowPlayerInfo.Width, this.dgvShowPlayerInfo.Height));
+			e.Graphics.DrawImage(bm, 0, 0);
 
 
 		}
 
-		private void GetPageArea(TabPage tablePage3)
-		{
-			memorying = new Bitmap(tablePage3.Width, tablePage3.Height);
-			tablePage3.DrawToBitmap(memorying, new Rectangle(0, 0, tablePage3.Width, tablePage3.Height));
 
-		}
 		#endregion
 
 		private void ctrlTable1_SelectedIndexChanged(object sender, EventArgs e)
@@ -197,20 +192,52 @@ namespace WorldCup.WindwosForm
 
 		private void RefreshRagListTwo()
 		{
+			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
+
+			var match = this.playerRepo.GetMatchStatisticsForTeamAndCupTask(new GetMatchStatisticsForTeamAndCupRequest()
+			{
+				Cup = this.settings.Cup,
+				TeamFifaCode = teamFifaCode
+			});
+
+
+			var bindingList = new BindingList<MatchRangListVM>(match.Matches);
+			var source = new BindingSource(bindingList, null);
+			dgvShowMatchInfo.DataSource = source;
+			dgvShowMatchInfo.AutoGenerateColumns = false;
 
 		}
+
 
 		private void RefreshRagListOne()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-			var getAllPlayersForTeamResponse = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
+			var player = this.playerRepo.GetPlayerStatisticsForPlayerAndCupTask(new GetPlayerStatisticsForPlayerAndCupRequest()
 			{
 				Cup = this.settings.Cup,
-				FifaCode = teamFifaCode
+				TeamFifaCode = teamFifaCode
 			});
 
 
+			var bindingList = new BindingList<PlayerRangListVM>(player.Players);
+			var source = new BindingSource(bindingList, null);
+			dgvShowPlayerInfo.DataSource = source;
+			dgvShowPlayerInfo.AutoGenerateColumns = false;
+			var imageCellGlobal = dgvShowPlayerInfo.Columns["ImageFilePath"] as DataGridViewImageColumn;
+			imageCellGlobal.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+			foreach (DataGridViewRow row in dgvShowPlayerInfo.Rows)
+			{
+				var imageCell = row.Cells["ImageFilePath"];
+				if (imageCell != null)
+				{
+
+
+					var imagePath = (row.DataBoundItem as PlayerRangListVM).ImageFilePath;
+					imageCell.Value = Image.FromFile(imagePath);
+				}
+			}
 		}
 
 		#region Player tab
@@ -269,7 +296,7 @@ namespace WorldCup.WindwosForm
 
 
 
-					flpFavourites.Controls.Add(new PlayerUC(new PlayerVM(player, playerIsFavourite,getPictureForPlayerResponse.ImagePath))
+					flpFavourites.Controls.Add(new PlayerUC(new PlayerVM(player, playerIsFavourite, getPictureForPlayerResponse.ImagePath))
 					{
 						ContextMenuStrip = RemoveFavouriteContextMenuItem
 					});
@@ -311,13 +338,13 @@ namespace WorldCup.WindwosForm
 				var SavePictureResult = this.playerRepo.SavePictureForPlayerTask(new SavePictureForPlayerRequest()
 				{
 					Cup = this.settings.Cup,
-					Image=Picture,
-					PlayerName= player.Name,
-					TeamFifaCode= teamFifaCode
+					Image = Picture,
+					PlayerName = player.Name,
+					TeamFifaCode = teamFifaCode
 				});
 				if (!SavePictureResult.Success)
 				{
-					MessageBox.Show("Pokušajte ponovo") ;
+					MessageBox.Show("Pokušajte ponovo");
 				}
 			}
 			opf.Dispose();
@@ -365,6 +392,14 @@ namespace WorldCup.WindwosForm
 		private void cbFavouriteTeam_SelectedValueChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(MessageBox.Show("Jeste li sigurni?") != DialogResult.OK)
+			{
+				e.Cancel = true;
+			}
 		}
 	}
 }
