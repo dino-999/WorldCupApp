@@ -53,14 +53,14 @@ namespace WorldCup.BussinesLayer.Repository
             {
                 var api = RestClient.For<ISoccerApi>("https://world-cup-json-2018.herokuapp.com/");
                 result.Teams = api.GetTeams().GetAwaiter().GetResult()
-                    .Select(x => new TeamVM(x.Id, x.Country, x.AlternateName, x.FifaCode, x.GroupId, x.GroupLetter))
+                    .Select(x => new TeamVM(x))
                     .ToList();
             }
             else if (request.Cup.Name == CupVM.FemaleCup)
             {
                 var api = RestClient.For<ISoccerApi>("https://worldcup.sfg.io/");
                 result.Teams = api.GetTeams().GetAwaiter().GetResult()
-                    .Select(x => new TeamVM(x.Id, x.Country, x.AlternateName, x.FifaCode, x.GroupId, x.GroupLetter))
+                    .Select(x => new TeamVM(x))
                     .ToList();
             }
             return result;

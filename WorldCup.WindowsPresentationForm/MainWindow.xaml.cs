@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WorldCup.BussinesLayer.Models;
 using WorldCup.BussinesLayer.Repository;
+using WorldCup.BussinesLayer.ViewModels;
 using WorldCup.WindowsPresentationForm.Properties;
 
 namespace WorldCup.WindowsPresentationForm
@@ -39,14 +40,50 @@ namespace WorldCup.WindowsPresentationForm
 
 		private void btnInfoEnemy_Click(object sender, RoutedEventArgs e)
 		{
-			Information info = new Information();
+
+			var selectedTeam = cbEnemyTeam.SelectedItem as TeamVM;
+			if (selectedTeam==null)
+			{
+				return;
+			}
+			Information info = new Information(new TeamInformationVM()
+			{
+				Name = selectedTeam.Country,
+				Difference=selectedTeam.GoalDifferential,
+				Wins=selectedTeam.Wins,
+				Loses=selectedTeam.Losses,
+				Draws=selectedTeam.Draws,
+				ScoredGoals=selectedTeam.GoalsAgainst,
+				GottenGoals=selectedTeam.GoalsFor,
+				FifaCode=selectedTeam.FifaCode,
+				GamesPlayed=selectedTeam.GamesPlayed
+			});
+
 			this.Visibility = Visibility.Visible;
 			info.Show();
 		}
 
 		private void btnInfoFavourite_Click(object sender, RoutedEventArgs e)
 		{
-			Information info = new Information();
+
+			var selectedTeam = cbFavouriteTeam.SelectedItem as TeamVM;
+			if (selectedTeam == null)
+			{
+				return;
+			}
+			Information info = new Information(new TeamInformationVM()
+			{
+				Name = selectedTeam.Country,
+				Difference = selectedTeam.GoalDifferential,
+				Wins = selectedTeam.Wins,
+				Loses = selectedTeam.Losses,
+				Draws = selectedTeam.Draws,
+				ScoredGoals = selectedTeam.GoalsAgainst,
+				GottenGoals = selectedTeam.GoalsFor,
+				FifaCode = selectedTeam.FifaCode,
+				GamesPlayed = selectedTeam.GamesPlayed
+			});
+
 			this.Visibility = Visibility.Visible;
 			info.Show();
 		}
@@ -101,6 +138,14 @@ namespace WorldCup.WindowsPresentationForm
 		{
 			PopulateSettingsFromDatabase();
 			PopulateTeamsDropdown();
+		}
+
+		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (MessageBox.Show("Jeste li sigurni?") != MessageBoxResult.OK)
+			{
+				e.Cancel = true;
+			}
 		}
 	}
 }

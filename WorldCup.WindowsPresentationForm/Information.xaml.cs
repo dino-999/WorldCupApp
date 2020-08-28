@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WorldCup.BussinesLayer.ViewModels;
 
 namespace WorldCup.WindowsPresentationForm
 {
@@ -19,16 +20,27 @@ namespace WorldCup.WindowsPresentationForm
 	/// </summary>
 	public partial class Information : Window
 	{
-		public Information()
+		private readonly TeamInformationVM team;
+
+		public Information(TeamInformationVM team)
 		{
 			InitializeComponent();
+			this.team = team;
 		}
 
-		private void btnAddDataBase_Click(object sender, RoutedEventArgs e)
+		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			//           var data = new Test { Test1 = "Test1", Test2 = "Test2" };
 
-			//      DataGridTest.Items.Add(data);
+			tbName.Text = this.team.Name;
+			tbFifaCode.Text = this.team.FifaCode;
+			tbGamesPlayed.Text = this.team.GamesPlayed.ToString();
+			tbWins.Text = this.team.Wins.ToString();
+			tbLoses.Text = this.team.Loses.ToString(); 
+			tbDraws.Text = this.team.Draws.ToString();
+			tbScoredGoals.Text = this.team.ScoredGoals.ToString();
+			tbGottenGoals.Text = this.team.GottenGoals.ToString();
+			tbDifference.Text = this.team.Difference.ToString();
+			
 		}
 	}
 }

@@ -12,14 +12,23 @@ namespace WorldCup.BussinesLayer.ViewModels
         {
 
         }
-        public TeamVM(int id, string country, string alternateName, string fifaCode, int groupId, string groupLetter)
+        public TeamVM(Team team)
         {
-            this.Id= id;
-            this.Country = country;
-            this.AlternateName = alternateName;
-            this.FifaCode = fifaCode;
-            this.GroupId = groupId;
-            this.GroupLetter = groupLetter;
+            this.Id= team.Id;
+            this.Country = team.Country;
+            this.AlternateName = team.AlternateName;
+            this.FifaCode = team.FifaCode;
+            this.GroupId = team.GroupId;
+            this.GroupLetter = team.GroupLetter;
+            this.Wins = team.Wins;
+            this.Losses = team.Losses;
+            this.Draws = team.Draws;
+            this.GamesPlayed = team.GamesPlayed;
+			this.Points = team.Points;
+            this.GoalsFor = team.GoalsFor;
+            this.GoalsAgainst = team.GoalsAgainst;
+            this.GoalDifferential = team.GoalDifferential;
+            
         }
     }
 }

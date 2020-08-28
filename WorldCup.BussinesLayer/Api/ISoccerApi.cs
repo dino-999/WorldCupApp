@@ -12,7 +12,7 @@ namespace WorldCup.BussinesLayer.Api
         [Get("matches")]
         Task<List<MatchDetail>> GetMatchDetails();
 
-        [Get("teams")]
+        [Get("teams/results")]
         Task<List<Team>> GetTeams();
     }
 }

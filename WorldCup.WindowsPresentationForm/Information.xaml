@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorldCup.WindowsPresentationForm"
         mc:Ignorable="d"
-        Title="Information" Height="450" Width="800">
+        Title="Information" Height="450" Width="800" Loaded="Window_Loaded">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20" />
@@ -21,19 +21,33 @@
 			<RowDefinition Height="auto" />
 			<RowDefinition Height="auto" />
 			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="20" />
 		</Grid.RowDefinitions>
+		<Label Content="Naziv:" Grid.Column="1" Grid.Row="1"/>
+		<Label Content="Fifa kod:" Grid.Column="1" Grid.Row="2"/>
+		<Label Content="Odigrane utakmice:" Grid.Column="1" Grid.Row="3"/>
+		<Label Content="Pobjede:" Grid.Column="1" Grid.Row="4"/>
+		<Label Content="Porazi:" Grid.Column="1" Grid.Row="5"/>
+		<Label Content="Izjednačeno:" Grid.Column="1" Grid.Row="6"/>
+		<Label Content="Zabijeni golovi:" Grid.Column="1" Grid.Row="7"/>
+		<Label Content="Primljeni golovi:" Grid.Column="1" Grid.Row="8"/>
+		<Label Content="Razlika:" Grid.Column="1" Grid.Row="9"/>
 
-		<DataGrid Grid.Column="1" AutoGenerateColumns="False" Name="DataGridTest" CanUserAddRows="True" Grid.Row="2" ItemsSource="{Binding TestBinding}" >
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Naziv" IsReadOnly="True" Binding="{Binding Path=Test1}" Width="90"></DataGridTextColumn>
-				<DataGridTextColumn Header="FIFA kod" IsReadOnly="True"  Binding="{Binding Path=Test2}" Width="90"></DataGridTextColumn>
-				<DataGridTextColumn Header="broj odigranih utakmica/pobjeda/poraza" IsReadOnly="True"  Binding="{Binding Path=test2}" Width="90"></DataGridTextColumn>
-				<DataGridTextColumn Header="primljeni/ostvareni golovi" IsReadOnly="True"  Binding="{Binding Path=Test2}" Width="90"></DataGridTextColumn>
-				
-			</DataGrid.Columns>
-		</DataGrid>
-		<Button x:Name="btnAddDataBase" Content="Dodaj bazu" Grid.Column="2" Grid.Row="3" Click="btnAddDataBase_Click" />
+		<TextBlock x:Name="tbName" Grid.Column="2" Grid.Row="1" Width="200"/>
+		<TextBlock x:Name="tbFifaCode" Grid.Column="2" Grid.Row="2" Width="200"/>
+		<TextBlock x:Name="tbGamesPlayed" Grid.Column="2" Grid.Row="3" Width="200"/>
+		<TextBlock x:Name="tbWins" Grid.Column="2" Grid.Row="4" Width="200"/>
+		<TextBlock x:Name="tbLoses" Grid.Column="2" Grid.Row="5" Width="200"/>
+		<TextBlock x:Name="tbDraws" Grid.Column="2" Grid.Row="6" Width="200"/>
+		<TextBlock x:Name="tbScoredGoals" Grid.Column="2" Grid.Row="7" Width="200"/>
+		<TextBlock x:Name="tbGottenGoals" Grid.Column="2" Grid.Row="8" Width="200"/>
+		<TextBlock x:Name="tbDifference" Grid.Column="2" Grid.Row="9" Width="200"/>
 	</Grid>
 </Window>
