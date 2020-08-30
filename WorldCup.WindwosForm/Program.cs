@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WorldCup.BussinesLayer;
 
 namespace WorldCup.WindwosForm
 {
@@ -16,6 +17,7 @@ namespace WorldCup.WindwosForm
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			FileUtils.EnsureDb();
 			Application.Run(new Main());
 		}
 	}
