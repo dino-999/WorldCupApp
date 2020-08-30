@@ -90,10 +90,16 @@ namespace WorldCup.WindowsPresentationForm
 
 		private void btnSettings_Click(object sender, RoutedEventArgs e)
 		{
-			Settings settings = new Settings();
+			Window1 s=new Window1();
 			this.Visibility = Visibility.Visible;
 
 			
+			PopulateSettingsFromDatabase();
+			PopulateTeamsDropdown();
+
+			s.Show();
+			
+
 		}
 
 		private void PopulateTeamsDropdown()

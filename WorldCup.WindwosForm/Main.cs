@@ -40,14 +40,14 @@ namespace WorldCup.WindwosForm
 
 		}
 
-		private void Main_Load(object sender, EventArgs e)
+		private async void Main_Load(object sender, EventArgs e)
 		{
 			//dohvati treuntne postavke
 
 
 
 
-			PopulateSettingsFromDatabase();
+			await PopulateSettingsFromDatabase();
 
 			//provjeriti jeli pohranjeno jezik i cup 
 			if (settings.Cup == null || settings.Language == null)
@@ -55,22 +55,22 @@ namespace WorldCup.WindwosForm
 				//ako nije digni setting kao modalnu formu--> naloadaj timove kao dropdown i oznaci omiljeni
 				Settings s = new Settings();
 				s.ShowDialog(this);
-				PopulateSettingsFromDatabase();
+				await PopulateSettingsFromDatabase();
 			}
 
 			//ako je naloadaj timove kao dropdown i oznaci omiljeni
 
-			PopulateTeamsDropdown();
+			await PopulateTeamsDropdown();
 		}
 
-		private void PopulateTeamsDropdown()
+		private async Task PopulateTeamsDropdown()
 		{
 			var getTeamTaskRequest = new GetTeamsTaskRequest()
 			{
 				Cup = settings.Cup
 			};
 
-			var allTeams = teamsRepo.GetTeamsTask(getTeamTaskRequest)?.Teams;
+			 var allTeams = await Task.Run(()=>teamsRepo.GetTeamsTask(getTeamTaskRequest)?.Teams);
 
 
 			var favouriteTeam = this.teamsRepo.GetFavouriteTeamTask(new GetFavouriteTeamTaskRequest()
@@ -80,7 +80,7 @@ namespace WorldCup.WindwosForm
 
 			if (favouriteTeam.Team != null)
 			{
-				var favouriteTeamFromDataSource = allTeams.Where(x => x.FifaCode == favouriteTeam.Team.FifaCode).FirstOrDefault();
+				var favouriteTeamFromDataSource = await Task.Run(()=> allTeams.Where(x => x.FifaCode == favouriteTeam.Team.FifaCode).FirstOrDefault());
 				cbFavouriteTeam.SelectedItem = favouriteTeamFromDataSource;
 			}
 
@@ -89,9 +89,9 @@ namespace WorldCup.WindwosForm
 			cbFavouriteTeam.DataSource = allTeams;
 		}
 
-		private void PopulateSettingsFromDatabase()
+		private async Task PopulateSettingsFromDatabase()
 		{
-			var getSettingsResponse = this.settingsRepo.GetSettingsTask(); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
+			var getSettingsResponse =  await Task.Run(()=>this.settingsRepo.GetSettingsTask()); //dohvati iz repoa trenutne postavke koje su spremljene u datoteci
 
 			if (!getSettingsResponse.Succeded)
 			{
@@ -102,22 +102,22 @@ namespace WorldCup.WindwosForm
 
 		}
 
-		private void btnSettings_Click(object sender, EventArgs e)
+		private async void btnSettings_Click(object sender, EventArgs e)
 		{
 			Settings s = new Settings();
 			s.ShowDialog(this);
-			PopulateSettingsFromDatabase();
-			PopulateTeamsDropdown();
+			await PopulateSettingsFromDatabase();
+			await PopulateTeamsDropdown();
 		}
 
-		private void btnMakeFavourite_Click(object sender, EventArgs e)
+		private async void btnMakeFavourite_Click(object sender, EventArgs e)
 		{
 			var currentSelectedTeam = (TeamVM)cbFavouriteTeam.SelectedItem;
-			var saveFavouriteTeamTaskResponse = teamsRepo.SaveFavouriteTeamsTask(new SaveFavouriteTeamTaskRequest()
+			var saveFavouriteTeamTaskResponse =  await Task.Run(()=>teamsRepo.SaveFavouriteTeamsTask(new SaveFavouriteTeamTaskRequest()
 			{
 				Cup = settings.Cup,
 				Team = currentSelectedTeam
-			});
+			}));
 
 			if (saveFavouriteTeamTaskResponse.Suceeded)
 			{
@@ -174,31 +174,31 @@ namespace WorldCup.WindwosForm
 
 		#endregion
 
-		private void ctrlTable1_SelectedIndexChanged(object sender, EventArgs e)
+		private async void ctrlTable1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (this.ctrlTable1.SelectedTab == this.tabPage1)
 			{
-				RefreshDataOnPlayersTab();
+				await RefreshDataOnPlayersTab();
 			}
 			else if (this.ctrlTable1.SelectedTab == this.tabPage2)
 			{
-				RefreshRagListOne();
+				await RefreshRagListOne();
 			}
 			else if (this.ctrlTable1.SelectedTab == this.tabPage3)
 			{
-				RefreshRagListTwo();
+				await RefreshRagListTwo();
 			}
 		}
 
-		private void RefreshRagListTwo()
+		private async Task RefreshRagListTwo()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-			var match = this.playerRepo.GetMatchStatisticsForTeamAndCupTask(new GetMatchStatisticsForTeamAndCupRequest()
+			var match = await Task.Run(()=> this.playerRepo.GetMatchStatisticsForTeamAndCupTask(new GetMatchStatisticsForTeamAndCupRequest()
 			{
 				Cup = this.settings.Cup,
 				TeamFifaCode = teamFifaCode
-			});
+			}));
 
 
 			var bindingList = new BindingList<MatchRangListVM>(match.Matches);
@@ -209,15 +209,15 @@ namespace WorldCup.WindwosForm
 		}
 
 
-		private void RefreshRagListOne()
+		private async Task RefreshRagListOne()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-			var player = this.playerRepo.GetPlayerStatisticsForPlayerAndCupTask(new GetPlayerStatisticsForPlayerAndCupRequest()
+			var player =  await Task.Run(()=>this.playerRepo.GetPlayerStatisticsForPlayerAndCupTask(new GetPlayerStatisticsForPlayerAndCupRequest()
 			{
 				Cup = this.settings.Cup,
 				TeamFifaCode = teamFifaCode
-			});
+			}));
 
 
 			var bindingList = new BindingList<PlayerRangListVM>(player.Players);
@@ -242,15 +242,15 @@ namespace WorldCup.WindwosForm
 
 		#region Player tab
 
-		private void RefreshDataOnPlayersTab()
+		private async Task  RefreshDataOnPlayersTab()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-			var getAllPlayersForTeamResponse = this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
+			var getAllPlayersForTeamResponse = await Task.Run(()=> this.matchRepo.GetAllPlayersForTeamTask(new GetAllPlayersForTeamTaskRequest()
 			{
 				Cup = this.settings.Cup,
 				FifaCode = teamFifaCode
-			});
+			}));
 
 			flpAllPlayers.Controls.Clear();
 			flpFavourites.Controls.Clear();
@@ -276,12 +276,12 @@ namespace WorldCup.WindwosForm
 					}
 				}
 
-				var getPictureForPlayerResponse = this.playerRepo.GetPictureForPlayerTask(new GetPictureForPlayerRequest()
+				var getPictureForPlayerResponse = await Task.Run(()=> this.playerRepo.GetPictureForPlayerTask(new GetPictureForPlayerRequest()
 				{
 					Cup = this.settings.Cup,
 					PlayerName = player.Name,
 					TeamFifaCode = teamFifaCode
-				});
+				}));
 
 				if (playerIsFavourite)
 				{
@@ -322,7 +322,7 @@ namespace WorldCup.WindwosForm
 			}
 		}
 
-		private void UploadPicture(object sender, EventArgs e)
+		private async void UploadPicture(object sender, EventArgs e)
 		{
 			OpenFileDialog opf = new OpenFileDialog();
 
@@ -335,13 +335,13 @@ namespace WorldCup.WindwosForm
 
 				var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
-				var SavePictureResult = this.playerRepo.SavePictureForPlayerTask(new SavePictureForPlayerRequest()
+				var SavePictureResult = await Task.Run(()=> this.playerRepo.SavePictureForPlayerTask(new SavePictureForPlayerRequest()
 				{
 					Cup = this.settings.Cup,
 					Image = Picture,
 					PlayerName = player.Name,
 					TeamFifaCode = teamFifaCode
-				});
+				}));
 				if (!SavePictureResult.Success)
 				{
 					MessageBox.Show("Pokušajte ponovo");
@@ -351,23 +351,23 @@ namespace WorldCup.WindwosForm
 
 		}
 
-		private void RemoveFavourite(object sender, EventArgs e)
+		private async void RemoveFavourite(object sender, EventArgs e)
 		{
 			var toolStrimMenuItem = (ToolStripMenuItem)sender;
 			var player = (Player)toolStrimMenuItem.Tag;
 
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
-			this.playerRepo.RemoveFavouritePlayerForTeamAndCupTask(new RemoveFavouritePlayerForTeamAndCupTaskRequest()
+			 await Task.Run(()=>this.playerRepo.RemoveFavouritePlayerForTeamAndCupTask(new RemoveFavouritePlayerForTeamAndCupTaskRequest()
 			{
 				Cup = this.settings.Cup,
 				TeamFifaCode = teamFifaCode,
 				Player = player
-			});
+			}));
 
-			this.RefreshDataOnPlayersTab();
+			await this.RefreshDataOnPlayersTab();
 		}
 
-		private void AddFavourite(object sender, EventArgs e)
+		private async void AddFavourite(object sender, EventArgs e)
 		{
 			var toolStrimMenuItem = (ToolStripMenuItem)sender;
 			var player = (Player)toolStrimMenuItem.Tag;
@@ -380,7 +380,7 @@ namespace WorldCup.WindwosForm
 				Player = player
 			});
 
-			this.RefreshDataOnPlayersTab();
+			 await this.RefreshDataOnPlayersTab();
 		}
 
 		#endregion

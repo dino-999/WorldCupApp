@@ -66,6 +66,9 @@
     <Compile Include="Information.xaml.cs">
       <DependentUpon>Information.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlayerOnField.xaml.cs">
+      <DependentUpon>PlayerOnField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\en.Designer.cs">
       <DependentUpon>en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -76,8 +79,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Information.xaml">
       <SubType>Designer</SubType>
@@ -95,7 +98,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Settings.xaml">
+    <Page Include="PlayerOnField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

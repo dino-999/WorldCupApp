@@ -55,16 +55,16 @@ namespace WorldCup.WindowsPresentationForm
 
         private void PopulateCupsDataSource()
         {
-        	cbGenderSelection.DataContext = this.cupsDataSource;
-        	cbGenderSelection.SelectedValue = "Name";
-        	cbGenderSelection.DisplayMemberPath = "Name";
+        	cbGenderSelection.ItemsSource = this.cupsDataSource;
+        	//cbGenderSelection.SelectedValue = "Name";
+        	//cbGenderSelection.DisplayMemberPath = "Name";
         }
 
         private void PopulateLanguagesDataSource()
         {
-       	cbLanguage.DataContext = this.languageDataSource;
-        	cbLanguage.DisplayMemberPath = "Name";
-        	cbLanguage.SelectedValue = "Value";
+       	cbLanguage.ItemsSource = this.languageDataSource;
+        	//cbLanguage.Items = "Name";
+        	//cbLanguage.SelectedValue = "Value";
         }
 
         private void PrepareLanguages()
