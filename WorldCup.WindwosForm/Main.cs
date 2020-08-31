@@ -182,15 +182,15 @@ namespace WorldCup.WindwosForm
 			}
 			else if (this.ctrlTable1.SelectedTab == this.tabPage2)
 			{
-				await RefreshRagListOne();
+				await RefreshRangListOne();
 			}
 			else if (this.ctrlTable1.SelectedTab == this.tabPage3)
 			{
-				await RefreshRagListTwo();
+				await RefreshRangListTwo();
 			}
 		}
 
-		private async Task RefreshRagListTwo()
+		private async Task RefreshRangListTwo()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
@@ -209,7 +209,7 @@ namespace WorldCup.WindwosForm
 		}
 
 
-		private async Task RefreshRagListOne()
+		private async Task RefreshRangListOne()
 		{
 			var teamFifaCode = this.cbFavouriteTeam.SelectedValue as string;
 
@@ -389,10 +389,7 @@ namespace WorldCup.WindwosForm
 			this.ctrlTable1_SelectedIndexChanged(ctrlTable1, e);
 		}
 
-		private void cbFavouriteTeam_SelectedValueChanged(object sender, EventArgs e)
-		{
-
-		}
+		
 
 		private void Main_FormClosing(object sender, FormClosingEventArgs e)
 		{

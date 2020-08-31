@@ -123,16 +123,16 @@
   <data name="language_english" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="settings_form_gender_selection" xml:space="preserve">
+  <data name="window1_form_gender_selection" xml:space="preserve">
     <value>Man/Female</value>
   </data>
-  <data name="settings_form_language" xml:space="preserve">
+  <data name="window1_form_language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="settings_form_save" xml:space="preserve">
+  <data name="window1_form_save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="settings_form_title" xml:space="preserve">
+  <data name="window1_form_title" xml:space="preserve">
     <value>Settings</value>
   </data>
 </root>

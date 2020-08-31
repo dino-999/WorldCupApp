@@ -106,7 +106,7 @@ namespace WorldCup.WindowsPresentationForm
 		{
 			var getTeamTaskRequest = new GetTeamsTaskRequest()
 			{
-				Cup = settings.Cup
+				Cup = this.settings.Cup
 			};
 
 			var allTeams = teamsRepo.GetTeamsTask(getTeamTaskRequest)?.Teams;

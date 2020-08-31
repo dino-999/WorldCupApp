@@ -31,8 +31,21 @@
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Muški/Ženski:" Margin="30"  FontSize="18"/>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Jezik:" Margin="30"  FontSize="18"/>
 
-        <ComboBox x:Name="cbGenderSelection" Grid.Column="2" Grid.Row="2" Width="150" Height="30" Margin="0,27"/>
-        <ComboBox x:Name="cbLanguage" Grid.Column="2" Grid.Row="3" Width="150" Height="30" Margin="0,27"/>
+        <ComboBox x:Name="cbGenderSelection" Grid.Column="2" Grid.Row="2" Width="150" Height="30" Margin="0,27" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Name="lblCup" Content="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+        <ComboBox x:Name="cbLanguage" Grid.Column="2" Grid.Row="3" Width="150" Height="30" Margin="0,27">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Name="lblLanguage" Content="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <Button x:Name="btnSave" Content="Spremi" Grid.Column="2" Grid.Row="4" Margin="10" Click="btnSave_Click"/>
     </Grid>

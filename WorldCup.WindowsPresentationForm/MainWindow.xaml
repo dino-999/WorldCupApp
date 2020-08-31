@@ -51,10 +51,16 @@
         <Button x:Name="btnInfoEnemy" Content="Info" Grid.Column="6" Grid.Row="1" Margin="10 0" MaxWidth="80" MinWidth="40" Click="btnInfoEnemy_Click" />
         
         <Button x:Name="btnInfoFavourite" Content="Info" Grid.Column="3" Grid.Row="1" Margin="10 0" MaxWidth="80" MinWidth="40" Click="btnInfoFavourite_Click"/>
-        <Button x:Name="btnSettings" Content="Postavke" Grid.Column="7" Grid.Row="1" Margin="10 0 0 0 " MaxWidth="80" MinWidth="50" Click="btnSettings_Click"/>
-        
-        
-    
-        
+        <Button x:Name="btnSettings" Content="Postavke" Grid.Column="7" Grid.Row="1" Margin="10 0 0 0 " MaxWidth="80" MinWidth="50" Click="btnSettings_Click" Height="22" VerticalAlignment="Top"/>
+
+
+        <Image Width="500" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="7" Grid.RowSpan="2" Margin="15">
+            <Image.Source>
+                <BitmapImage DecodePixelWidth="500" UriSource="/soccer_field.png" />
+            </Image.Source>
+        </Image>
+
+        <local:PlayerOnField x:Name="ucDefender" Width="20" Height="20" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2"></local:PlayerOnField>
+        <local:PlayerOnField x:Name="ucDefender1" Width="20" Height="20" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2"></local:PlayerOnField>
     </Grid>
 </Window>

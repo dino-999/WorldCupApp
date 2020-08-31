@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorldCup.WindwosForm.Properties {
+namespace WorldCup.WindowsPresentationForm.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WorldCup.WindwosForm.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WorldCup.WindwosForm.Properties.en", typeof(en).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WorldCup.WindowsPresentationForm.Properties.en", typeof(en).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -81,36 +81,36 @@ namespace WorldCup.WindwosForm.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Man/Female.
         /// </summary>
-        internal static string settings_form_gender_selection {
+        internal static string window1_form_gender_selection {
             get {
-                return ResourceManager.GetString("settings_form_gender_selection", resourceCulture);
+                return ResourceManager.GetString("window1_form_gender_selection", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        internal static string settings_form_language {
+        internal static string window1_form_language {
             get {
-                return ResourceManager.GetString("settings_form_language", resourceCulture);
+                return ResourceManager.GetString("window1_form_language", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string settings_form_save {
+        internal static string window1_form_save {
             get {
-                return ResourceManager.GetString("settings_form_save", resourceCulture);
+                return ResourceManager.GetString("window1_form_save", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string settings_form_title {
+        internal static string window1_form_title {
             get {
-                return ResourceManager.GetString("settings_form_title", resourceCulture);
+                return ResourceManager.GetString("window1_form_title", resourceCulture);
             }
         }
     }

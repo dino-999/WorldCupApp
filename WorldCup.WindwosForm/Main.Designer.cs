@@ -79,7 +79,7 @@
 			this.cbFavouriteTeam.Size = new System.Drawing.Size(183, 21);
 			this.cbFavouriteTeam.TabIndex = 0;
 			this.cbFavouriteTeam.SelectedIndexChanged += new System.EventHandler(this.cbFavouriteTeam_SelectedIndexChanged);
-			this.cbFavouriteTeam.SelectedValueChanged += new System.EventHandler(this.cbFavouriteTeam_SelectedValueChanged);
+			
 			// 
 			// lblFavouriteTeam
 			// 

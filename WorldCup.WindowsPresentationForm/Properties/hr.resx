@@ -123,16 +123,16 @@
   <data name="language_english" xml:space="preserve">
     <value>Engleski</value>
   </data>
-  <data name="settings_form_gender_selection" xml:space="preserve">
+  <data name="window1_form_gender_selection" xml:space="preserve">
     <value>Muški/Ženski</value>
   </data>
-  <data name="settings_form_language" xml:space="preserve">
+  <data name="window1_form_language" xml:space="preserve">
     <value>Jezik</value>
   </data>
-  <data name="settings_form_save" xml:space="preserve">
+  <data name="window1_form_save" xml:space="preserve">
     <value>Spremi</value>
   </data>
-  <data name="settings_form_title" xml:space="preserve">
+  <data name="window1_form_title" xml:space="preserve">
     <value>Postavke</value>
   </data>
 </root>
